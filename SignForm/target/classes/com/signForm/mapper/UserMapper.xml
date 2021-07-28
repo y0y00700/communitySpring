@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.signForm.mapper.UserMapper">
+	<insert id="insert">
+		insert into user_prac values(#{id},#{pw},#{name},#{email},#{gender},#{birth})
+	</insert>
+	<select id="select" resultType="int">
+		select count(*) from user_prac where id=#{id} and pw=#{pw} 
+	</select>
+	<select id="getInfo" resultType="com.signForm.domain.UserVO">
+		select * from user_prac where id=#{id}
+	</select>
+	<update id="update">
+		update user_prac 
+		set pw=#{pw},name=#{name},email=#{email},gender=#{gender},birth=#{birth} 
+		where id=#{id}
+	</update>
+	<delete id="delete">
+		delete from user_prac where id=#{id}
+	</delete>
+	<select id="overlap" resultType="int">
+		select count(*) from user_prac where id=#{id}
+	</select>
+	<select id="getList" resultType="com.signForm.domain.UserVO">
+		<![CDATA[
+		 select id,name,email,gender,birth
+		 from 
+		 (select /*+ INDEX_ASC(user_prac pk_user)*/ rownum rn ,id,name,email,gender,birth 
+		 from user_prac
+		 where rownum <= #{pageNum}*#{amount}
+		 )
+		 where rn>(#{pageNum}-1)*#{amount}
+		]]>
+	</select>
+	<select id="getTotalCount" resultType="int">
+	<![CDATA[
+		select count(*) from user_prac
+	]]>
+	</select>
+</mapper>
