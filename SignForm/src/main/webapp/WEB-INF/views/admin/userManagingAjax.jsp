@@ -33,7 +33,7 @@
       </nav>
  <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">UserList</h1>
+                    <h1 class="page-header">UserListAax</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -67,38 +67,36 @@
                         			</tr>
                         		</c:forEach>
                         	</table>
-                        	<div class='pull-right'>
-                        		<ul class="pagination">
-                        			<c:if test="${pageMaker.prev}">
-                        				<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
-                        			</c:if>
-                        			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                        				<li class="paginate_button ${pageMaker.cri.pageNum==num?"active":""}"><a href='${num}'>${num}</a></li>
-                        			</c:forEach>
-                        			<c:if test="${pageMaker.next}">
-                        				<li class="paginate_button next"><a href="${pageMaker.startPage+1}">Next</a></li>
-                        			</c:if>
-                        		</ul>
-                        	</div>
-                        	<form id="actionForm" action="/admin/userManaging" method='get'>
-                        		<input type='hidden' name='pageNum' value="${pageMaker.cri.pageNum}">
-                        		<input type='hidden' name='amoun' value="${pageMaker.cri.amount}">
-                        	</form>
-                        </div>
+                        	<input type="button" class="btn btn-warning" id="search" value="유저목록 조회">
+                        		<div id="result"></div>
+                        </div>	
                    </div>
               </div>
            </div>
          <!-- 유저 정보 테이블 -->
 </body>
 <script>
-	$(function(){
-		var actionForm=$("#actionForm");
-		$(".pagination a").on("click",function(e){
-			e.preventDefault();
-			console.log('click');
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-			actionForm.submit();
-		});
-	});
+$(function(){
+    var message="${message}";
+        $("#search").on("click",function(e){
+            var userList= function(callback){			
+                $.ajax({
+                    url:"/admin/requestUser",
+                    type:"POST",
+                    contentType:"application/json;charset=utf-8",
+                    success:function(data,status,xhr){
+                        if(callback){
+                            callback(data);
+                        }
+                    },
+                    error:function(xhr,status,er){
+                        alert(er);
+                    }
+                });
+            }
+
+            console.log(userList(userList));
+        });
+});
 </script>
 </html>

@@ -24,7 +24,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="/admin/adminHome"><i class="fas fa-home fa-lg"></i></a></li>
               <li><a href="/admin/userManaging">회원관리</a></li>
-              <li><a href="/admin/adminAjax">Ajax 방식 회원 관리</a></li>
+              <li><a href="/admin/userManagingAjax">Ajax 방식 회원 관리</a></li>
               <li><a href="/admin/adminManager">관리자 관리</a></li>
             </ul>
           </div>
